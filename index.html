@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emotion Detector</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <h1>Emotion Detector</h1>
+  <input type="text" id="textInput" placeholder="Enter a sentence" />
+  <button onclick="predictEmotion()">Predict</button>
+  <h2 id="result"></h2>
+
+  <script>
+    async function predictEmotion() {
+      const input = document.getElementById("textInput").value;
+      const response = await fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: input })
+      });
+      const data = await response.json();
+      document.getElementById("result").innerText = `Emotion: ${data.emotion}`;
+    }
+  </script>
+</body>
+</html>
